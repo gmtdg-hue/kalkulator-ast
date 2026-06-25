@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<input id="expr"
+placeholder="contoh 5+3*2">
+
+<button onclick="calc()">
+Hitung
+</button>
+
+<h3 id="hasil"></h3>
+
+
+<script>
+
+async function calc(){
+
+let expression =
+document.getElementById("expr").value;
+
+
+let response =
+await fetch(
+"http://127.0.0.1:5000/calculate",
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+expression:expression
+})
+
+});
+
+
+let data =
+await response.json();
+
+
+document.getElementById("hasil")
+.innerHTML =
+"Hasil: " + data.result;
+
+}
+
+</script>
+
+
+</body>
+</html>
