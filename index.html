@@ -1,55 +1,323 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+
+<title>AST Calculator</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+
+body{
+
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(135deg,#667eea,#764ba2);
+
+}
+
+
+.container{
+
+    width:350px;
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.2);
+
+}
+
+
+
+h2{
+
+    text-align:center;
+
+    color:#333;
+
+}
+
+
+
+.subtitle{
+
+    text-align:center;
+
+    color:#777;
+
+    font-size:14px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+input{
+
+    width:100%;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    border:1px solid #ddd;
+
+    font-size:18px;
+
+    outline:none;
+
+}
+
+
+
+button{
+
+    margin-top:15px;
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#667eea;
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+    background:#5563c1;
+
+}
+
+
+
+.result-box{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:#f5f5f5;
+
+    border-radius:15px;
+
+}
+
+
+
+.label{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+
+
+#expression{
+
+    font-size:18px;
+
+    color:#333;
+
+}
+
+
+
+#hasil{
+
+    margin-top:10px;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#667eea;
+
+}
+
+
+</style>
+
+</head>
+
+
+
 <body>
 
-<input id="expr"
-placeholder="contoh 5+3*2">
+
+<div class="container">
+
+
+<h2>
+AST Calculator
+</h2>
+
+
+<p class="subtitle">
+Recursive Parser + Python Backend
+</p>
+
+
+
+<input 
+id="expr"
+placeholder="Contoh: 5+3*2">
+
+
 
 <button onclick="calc()">
+
 Hitung
+
 </button>
 
-<h3 id="hasil"></h3>
+
+
+
+<div class="result-box">
+
+
+<div class="label">
+Ekspresi:
+</div>
+
+
+<div id="expression">
+-
+</div>
+
+
+
+<div class="label" style="margin-top:15px">
+Hasil:
+</div>
+
+
+<div id="hasil">
+-
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
 
 
 <script>
 
+
 async function calc(){
 
+
 let expression =
-document.getElementById("expr").value;
+
+document
+.getElementById("expr")
+.value;
+
+
+
+if(expression.trim()==""){
+
+return;
+
+}
+
 
 
 let response =
+
 await fetch(
+
 "http://127.0.0.1:5000/calculate",
+
 {
+
+
 method:"POST",
 
+
 headers:{
-"Content-Type":"application/json"
+
+"Content-Type":
+"application/json"
+
 },
 
-body:JSON.stringify({
+
+body:
+
+JSON.stringify({
+
 expression:expression
+
 })
 
-});
+
+}
+
+);
+
 
 
 let data =
+
 await response.json();
 
 
-document.getElementById("hasil")
-.innerHTML =
-"Hasil: " + data.result;
+
+document
+.getElementById("expression")
+.innerHTML = expression;
+
+
+
+document
+.getElementById("hasil")
+.innerHTML = data.result;
+
+
 
 }
+
+
 
 </script>
 
 
+
 </body>
+
 </html>
